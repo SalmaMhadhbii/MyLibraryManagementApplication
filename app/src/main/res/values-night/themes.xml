@@ -1,7 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.MyLibraryManagementApplication" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <!-- Base application theme -->
+    <style name="Base.Theme.MyLibraryManagementApplication" parent="Theme.Material3.Light">
+        <!-- Customize your light theme here -->
+        <item name="colorPrimary">@android:color/white</item> <!-- Action bar background color -->
+        <item name="colorOnPrimary">@android:color/black</item> <!-- Text color for the action bar -->
     </style>
+
+    <style name="Theme.MyLibraryManagementApplication" parent="Base.Theme.MyLibraryManagementApplication" />
 </resources>
