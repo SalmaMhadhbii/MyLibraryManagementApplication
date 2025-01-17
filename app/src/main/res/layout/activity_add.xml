@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity">
+    tools:context=".AddActivity"
+    android:padding="20dp">
 
     <EditText
         android:id="@+id/title_input"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:autofillHints=""
-        android:ems="10"
+        android:layout_marginTop="100dp"
         android:hint="@string/book_title"
         android:inputType="textPersonName"
+        android:backgroundTint="@color/light_gray"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_gray"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.85" />
 
     <EditText
         android:id="@+id/author_input"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:autofillHints=""
-        android:ems="10"
         android:hint="@string/book_author"
         android:inputType="textPersonName"
+        android:backgroundTint="@color/light_gray"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_gray"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_input" />
+        app:layout_constraintTop_toBottomOf="@+id/title_input"
+        app:layout_constraintWidth_percent="0.85" />
 
     <EditText
         android:id="@+id/pages_input"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:autofillHints=""
-        android:ems="10"
         android:hint="@string/number_of_pages"
         android:inputType="number"
+        android:backgroundTint="@color/light_gray"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_gray"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/author_input" />
+        app:layout_constraintTop_toBottomOf="@+id/author_input"
+        app:layout_constraintWidth_percent="0.85" />
 
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/add"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/button_purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pages_input"
+        app:layout_constraintWidth_percent="0.6" />
 </androidx.constraintlayout.widget.ConstraintLayout>
