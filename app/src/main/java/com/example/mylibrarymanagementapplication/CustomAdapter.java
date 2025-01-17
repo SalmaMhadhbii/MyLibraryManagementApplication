@@ -2,9 +2,11 @@ package com.example.mylibrarymanagementapplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,13 +51,34 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     //Once a row is ready, this step fills it with the right data. For example, it puts the book title, author, and other details in the right places for each row.
     //For example, if the RecyclerView is displaying 10 rows, this method will be called 10 times.
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         //set the text of the book_id_txt TextView in the current row to the corresponding value from the book_id dataset.
         //The book_id.get(position) retrieves the position-th item from the book_id list.
         holder.book_id_txt.setText(book_id.get(position));
         holder.book_title_txt.setText(book_title.get(position));
         holder.book_author_txt.setText(book_author.get(position));
         holder.book_pages_txt.setText(book_pages.get(position));
+
+        //Recyclerview onClickListener
+        //Use getAdapterPosition() inside the OnClickListener to get the correct position
+        //The mainLayout (which is a LinearLayout that wraps the entire row) is set to trigger an intent to the UpdateActivity when clicked.
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Use getAdapterPosition() instead of position directly This is crucial for preventing issues that may arise from view recycling in the RecyclerView.
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) { // Check if the position is valid
+                    Intent intent = new Intent(context, UpdateActivity.class);
+                    intent.putExtra("id", book_id.get(adapterPosition));
+                    intent.putExtra("title", book_title.get(adapterPosition));
+                    intent.putExtra("author", book_author.get(adapterPosition));
+                    intent.putExtra("pages", book_pages.get(adapterPosition));
+                    activity.startActivityForResult(intent, 1);
+                }
+            }
+        });
+
+
     }
 
     //This tells the RecyclerView how many items you have in total (e.g., the number of books).
@@ -72,12 +95,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView book_id_txt, book_title_txt, book_author_txt, book_pages_txt;
 
+        //mainLayout refers to the <LinearLayout> container that holds all the other views (TextViews for book_id, book_title, etc.).
+        // ==>LinearLayout balise fil row.xml feha les elments mta3 e rows ==>Row refers to the entire LinearLayout item (which will contain all the TextViews).
+        LinearLayout mainLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             book_id_txt = itemView.findViewById(R.id.book_id_txt);
             book_title_txt = itemView.findViewById(R.id.book_title_txt);
             book_author_txt = itemView.findViewById(R.id.book_author_txt);
             book_pages_txt = itemView.findViewById(R.id.book_pages_txt);
+
+            //mainLayout is used to refer to the entire row layout of each item in the RecyclerVie
+            mainLayout = itemView.findViewById(R.id.mainLayout);
         }
     }
 }
