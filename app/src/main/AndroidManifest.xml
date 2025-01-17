@@ -13,8 +13,13 @@
         android:theme="@style/Theme.MyLibraryManagementApplication"
         tools:targetApi="31">
         <activity
+            android:name=".AddActivity"
+            android:label="Add Book"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="Book Library">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
