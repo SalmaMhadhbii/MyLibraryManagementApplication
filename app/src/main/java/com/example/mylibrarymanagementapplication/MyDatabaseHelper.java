@@ -76,4 +76,27 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    void updateData(String row_id, String title, String author, String pages){
+        //retrieves a writable database instance using getWritableDatabase(). It allows modifications to the database, such as updates.
+        SQLiteDatabase db = this.getWritableDatabase();
+        //store the key-value pairs of the data that you want to update in the database. Each key corresponds to a column name, and the value is the new data for that column.
+        ContentValues cv = new ContentValues();
+        //COLUMN_TITLE, COLUMN_AUTHOR, and COLUMN_PAGES represent the column names in the database table.
+        //title, author, and pages are the values being updated.
+        cv.put(COLUMN_TITLE, title);
+        cv.put(COLUMN_AUTHOR, author);
+        cv.put(COLUMN_PAGES, pages);
+
+        //"_id=?": The WHERE clause, indicating which row(s) to update. Here, it specifies that the row with the ID equal to row_id should be updated.
+        //new String[]{row_id}: An array of arguments for the WHERE clause (in this case, row_id).
+        //update returns the number of rows affected, and the result is stored in result.
+        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 }
