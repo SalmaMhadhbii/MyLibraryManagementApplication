@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyLibraryManagementApplication"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddActivity"
             android:label="Add Book"
             android:parentActivityName=".MainActivity" />
