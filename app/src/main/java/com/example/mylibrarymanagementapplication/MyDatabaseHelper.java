@@ -60,12 +60,19 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     Cursor readAllData(){
         //a query to select all the data from db table
         String query = "SELECT * FROM " + TABLE_NAME;
+
+        // Get a readable instance of the database.
         SQLiteDatabase db = this.getReadableDatabase();
 
+        // Declare a Cursor object to hold the result of the query.
         Cursor cursor = null;
+
+        // If the database instance is not null, execute the query.
         if(db != null){
-            cursor = db.rawQuery(query, null);
+            cursor = db.rawQuery(query, null); // Execute the query and assign the result to the cursor.
         }
+
+        // Return the cursor containing the data.
         return cursor;
     }
 
