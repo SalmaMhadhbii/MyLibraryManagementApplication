@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme -->
-    <style name="Base.Theme.MyLibraryManagementApplication" parent="Theme.Material3.Light">
-        <item name="colorPrimary">@color/white</item> <!-- Action bar background color -->
-        <item name="colorOnPrimary">@color/black</item> <!-- Text color for the action bar -->
+    <style name="Base.Theme.MyLibraryManagementApplication" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/black</item> <!-- Action bar background color -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Text color for the action bar -->
         <!-- Customize other theme attributes here if needed -->
     </style>
 
