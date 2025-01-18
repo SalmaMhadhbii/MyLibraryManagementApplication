@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class UpdateActivity extends AppCompatActivity {
     EditText title_input, author_input, pages_input;
-    Button update_button;
+    Button update_button,delete_button;
 
     String id, title, author, pages;
 
@@ -28,6 +28,7 @@ public class UpdateActivity extends AppCompatActivity {
         author_input = findViewById(R.id.author_input2);
         pages_input = findViewById(R.id.pages_input2);
         update_button = findViewById(R.id.update_button);
+        delete_button = findViewById(R.id.delete_button);
 
         //always call the methods in the onCreate()
         //1 call this method
@@ -51,6 +52,13 @@ public class UpdateActivity extends AppCompatActivity {
                 author = author_input.getText().toString().trim();
                 pages = pages_input.getText().toString().trim();
                 myDB.updateData(id, title, author, pages);
+            }
+        });
+
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
