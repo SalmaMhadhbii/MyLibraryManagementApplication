@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -63,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
         //A LinearLayoutManager is used to arrange the items in a vertical list.
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            recreate();
+        }
     }
 
     //storeDataInArrays() is responsible for fetching data from a database and storing it in array lists so that the data can later be displayed in a RecyclerView (or similar component).

@@ -27,14 +27,28 @@ public class UpdateActivity extends AppCompatActivity {
         author_input = findViewById(R.id.author_input2);
         pages_input = findViewById(R.id.pages_input2);
         update_button = findViewById(R.id.update_button);
+
+        //always call the methods in the onCreate()
+        //1 call this method
+        getAndSetIntentData();
+
+        
+
+
+        //method updateData in mydbhelper should be called in updateActivity
+        //when we click update_button this action will be declenshed
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //2 call this
+                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
+                title = title_input.getText().toString().trim();
+                author = author_input.getText().toString().trim();
+                pages = pages_input.getText().toString().trim();
+                myDB.updateData(id, title, author, pages);
             }
         });
-        //always call the methods in the onCreate()
-        getAndSetIntentData();
+
     }
 
     void getAndSetIntentData(){
