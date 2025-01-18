@@ -95,4 +95,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Clear the current data lists to avoid duplicating items
+        book_id.clear();
+        book_title.clear();
+        book_author.clear();
+        book_pages.clear();
+        // Re-fetch data from the database
+        storeDataInArrays();
+        // Notify the adapter that the data has changed
+        customAdapter.notifyDataSetChanged();
+    }
+
 }
