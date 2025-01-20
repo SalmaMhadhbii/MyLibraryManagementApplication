@@ -9,16 +9,22 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String DATABASE_NAME = "BookLibrary.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; // Incremented version
 
     private static final String TABLE_NAME = "my_library";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "book_title";
     private static final String COLUMN_AUTHOR = "book_author";
     private static final String COLUMN_PAGES = "book_pages";
+    private static final String COLUMN_DATE = "date_added"; // New column for date
+
 
     MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,13 +33,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // Updated to include the date column
         String query = "CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TITLE + " TEXT, " +
                 COLUMN_AUTHOR + " TEXT, " +
-                COLUMN_PAGES + " INTEGER);";
+                COLUMN_PAGES + " INTEGER, " +
+                COLUMN_DATE + " INTEGER);";
         db.execSQL(query);
-
     }
 
     @Override
@@ -49,6 +56,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_AUTHOR, author);
         cv.put(COLUMN_PAGES, pages);
+        cv.put(COLUMN_DATE, System.currentTimeMillis()); // Store current timestamp
+
         long result = db.insert(TABLE_NAME,null, cv);
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
@@ -107,6 +116,40 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }else{
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Method to get the latest book added based on the date
+    public String getLatestBook() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_DATE + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.getCount() == 0) return "No books found.";
+
+        cursor.moveToFirst();
+        String title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE));
+        String author = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AUTHOR));
+        long date = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        String formattedDate = sdf.format(new Date(date));
+
+        cursor.close();
+        return "Latest Book:Title: " + title + "Author: " + author + "Date Added: " + formattedDate;
+    }
+
+    // Method to get the latest date timestamp from the table
+    public long getLatestDateTimestamp() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT MAX(" + COLUMN_DATE + ") as latest_date FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+
+        long latestTimestamp = 0;
+        if (cursor.moveToFirst()) {
+            latestTimestamp = cursor.getLong(cursor.getColumnIndexOrThrow("latest_date"));
+        }
+        cursor.close();
+        return latestTimestamp;
     }
 
 }
