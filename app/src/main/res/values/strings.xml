@@ -11,4 +11,7 @@
     <string name="_120">120</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
+    <string name="are_you_a_librarian_or_a_client">Are you a librarian or a client ?</string>
+    <string name="librarian">Librarian</string>
+    <string name="client">Client</string>
 </resources>
