@@ -22,6 +22,8 @@ public class LibrarianActivity extends AppCompatActivity {
 
 
     MyDatabaseHelper myDB;
+
+    // Déclaration des listes pour stocker les informations des livres
     ArrayList<String> book_id, book_title, book_author, book_pages;
     CustomAdapter customAdapter;
 
@@ -51,13 +53,13 @@ public class LibrarianActivity extends AppCompatActivity {
         book_author = new ArrayList<>();
         book_pages = new ArrayList<>();
 
-        // This method (storeDataInArrays()) is called to fetch data from the database and fill the ArrayLists (book_id, book_title, book_author, and book_pages).
+        // Appel de la méthode qui récupère les données de la base de données et les stocke dans les listes
         storeDataInArrays();
 
-        //A custom adapter (CustomAdapter) is created and set to the RecyclerView. This adapter will take the data (the book info from the ArrayLists) and populate the RecyclerView items.
-        customAdapter = new CustomAdapter(LibrarianActivity.this,this, book_id, book_title, book_author, book_pages);
+        // Création et configuration de l'adaptateur personnalisé pour la RecyclerView
+        customAdapter = new CustomAdapter(LibrarianActivity.this, this, book_id, book_title, book_author, book_pages);
         recyclerView.setAdapter(customAdapter);
-        //A LinearLayoutManager is used to arrange the items in a vertical list.
+        // Configuration du gestionnaire de mise en page en mode liste verticale
         recyclerView.setLayoutManager(new LinearLayoutManager(LibrarianActivity.this));
 
     }
@@ -76,33 +78,38 @@ public class LibrarianActivity extends AppCompatActivity {
     //When you call cursor.moveToNext(), it moves the cursor to the second row, and so on.
     //You can then access the data in the current row, like cursor.getString(1) to get the book_title.
     void storeDataInArrays(){
+        // Récupération des données via la méthode readAllData() de MyDatabaseHelper qui renvoie un Cursor
         Cursor cursor = myDB.readAllData();
+
+        // Si aucune donnée n'est trouvée, afficher un message Toast
         if(cursor.getCount() == 0){
             Toast.makeText(this,"No data", Toast.LENGTH_LONG).show();
         }else{
+            // Boucle pour parcourir les résultats de la base de données
             while (cursor.moveToNext()){
-                // Retrieves the value of the first column (assumed to be the book_id) from the current row and adds it to the book_id array list.
-                book_id.add(cursor.getString(0));
-                //Similarly, this retrieves the second column (assumed to be book_title) from the current row and adds it to the book_title array list.
-                book_title.add(cursor.getString(1));
-                book_author.add(cursor.getString(2));
-                book_pages.add(cursor.getString(3));
+                // Ajout des informations récupérées à partir du curseur dans les différentes listes
+                book_id.add(cursor.getString(0)); // ID du livre
+                book_title.add(cursor.getString(1)); // Titre du livre
+                book_author.add(cursor.getString(2)); // Auteur du livre
+                book_pages.add(cursor.getString(3)); // Nombre de pages du livre
             }
         }
-
     }
 
+    //Lorsque l'activité est reprise, cette méthode vide les listes de données actuelles,
+    // recharge les données de la base de données
+    // et notifie l'adaptateur que les données ont changé pour rafraîchir l'affichage.
     @Override
     protected void onResume() {
         super.onResume();
-        // Clear the current data lists to avoid duplicating items
+        // Effacer les données actuelles des listes pour éviter les doublons
         book_id.clear();
         book_title.clear();
         book_author.clear();
         book_pages.clear();
-        // Re-fetch data from the database
+        // Recharger les données de la base de données
         storeDataInArrays();
-        // Notify the adapter that the data has changed
+        // Notifier l'adaptateur que les données ont été mises à jour
         customAdapter.notifyDataSetChanged();
     }
 

@@ -33,41 +33,48 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         this.book_pages = book_pages;
     }
 
+    //1- creation de ligne
     //preparing the rows in your list. It decides how each row in the list will look (based on your layout file, my_row.xml).
     //The onCreateViewHolder method runs only when a new row layout needs to be created.
-    //MyViewHolder: container for the row layout’s views (e.g., TextView widgets for book details) so you can efficiently set data in those views without repeatedly finding them.
+    //MyViewHolder: classe interne statique dans l'adaptateur CustomAdapter : container for the row layout’s views (e.g., TextView widgets for book details) so you can efficiently set data in those views without repeatedly finding them.
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //LayoutInflater: a class that converts (or "inflates") an XML layout file into an actual View object in memory.
-        //context here is usually the activity or application that knows how to access resources, such as layouts.
         LayoutInflater inflater = LayoutInflater.from(context);
-        //inflate the XML layout file my_row.xml, which defines what each row in your RecyclerView looks like.
-        //The false means "don’t attach this view to the RecyclerView just yet." This is because the RecyclerView will handle attaching it later.
+        // LayoutInflater : une classe qui convertit (ou "inflates") un fichier de mise en page XML en un objet View réel en mémoire.
+        // Le contexte ici est généralement l'activité ou l'application qui sait comment accéder aux ressources, comme les mises en page.
+
         View view = inflater.inflate(R.layout.my_row, parent, false);
+        // convertit le fichier de mise en page XML my_row.xml, qui définit l'apparence de chaque ligne dans votre RecyclerView.
+        //parent :ViewGroup parent dans lequel cette vue sera attachée. Il est nécessaire, même si dans ce cas, nous ne l'utilisons pas pour attacher la vue immédiatement, car cela sera géré par le RecyclerView lui-même.
+        // Le "false" signifie "ne pas encore attacher cette vue au RecyclerView". Cela est dû au fait que le RecyclerView gérera l'attachement plus tard.
+
         return new MyViewHolder(view);
     }
 
-    //Once a row is ready, this step fills it with the right data. For example, it puts the book title, author, and other details in the right places for each row.
-    //For example, if the RecyclerView is displaying 10 rows, this method will be called 10 times.
+
+    // 2- remplir la ligne
+    // Une fois qu'une ligne est prête, cette étape la remplit avec les bonnes données. Par exemple, elle place le titre du livre, l'auteur et d'autres détails aux bons endroits pour chaque ligne.
+    // Par exemple, si le RecyclerView affiche 10 lignes, cette méthode sera appelée 10 fois.
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        //set the text of the book_id_txt TextView in the current row to the corresponding value from the book_id dataset.
-        //The book_id.get(position) retrieves the position-th item from the book_id list.
+        // Définir le texte du TextView book_id_txt dans la ligne actuelle avec la valeur correspondante du liste book_id.
+        // book_id.get(position) récupère l'élément à la position donnée dans la liste book_id.
         holder.book_id_txt.setText(book_id.get(position));
         holder.book_title_txt.setText(book_title.get(position));
         holder.book_author_txt.setText(book_author.get(position));
         holder.book_pages_txt.setText(book_pages.get(position));
 
-        //Recyclerview onClickListener
-        //Use getAdapterPosition() inside the OnClickListener to get the correct position
-        //The mainLayout (which is a LinearLayout that wraps the entire row) is set to trigger an intent to the UpdateActivity when clicked.
+        // OnClickListener pour le RecyclerView
+        // Utilisez getAdapterPosition() dans le OnClickListener pour obtenir la position correcte
+        // Le mainLayout (qui est un LinearLayout enveloppant toute la ligne) est configuré pour déclencher un Intent vers UpdateActivity lorsqu'il est cliqué.
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Use getAdapterPosition() instead of position directly This is crucial for preventing issues that may arise from view recycling in the RecyclerView.
+                // Utilisez getAdapterPosition() au lieu de position directement. Cela est crucial pour éviter les problèmes pouvant survenir à cause du recyclage des vues dans le RecyclerView.
                 int adapterPosition = holder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION) { // Check if the position is valid
+                if (adapterPosition != RecyclerView.NO_POSITION) { // Vérifier si la position est valide
+                    // Créer un Intent pour démarrer l'activité UpdateActivity
                     Intent intent = new Intent(context, UpdateActivity.class);
                     intent.putExtra("id", book_id.get(adapterPosition));
                     intent.putExtra("title", book_title.get(adapterPosition));
@@ -77,8 +84,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 }
             }
         });
-
-
     }
 
     //This tells the RecyclerView how many items you have in total (e.g., the number of books).
