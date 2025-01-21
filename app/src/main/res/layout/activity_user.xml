@@ -1,11 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".UserActivity">
 
+  <!-- Section supérieure -->
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/top_section"
+      android:layout_width="0dp"
+      android:layout_height="180dp"
+      android:background="@drawable/bckg"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+    <!-- Texte "Find Your" -->
+    <TextView
+        android:id="@+id/text_find_your"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Find Your"
+        android:textColor="#5D5D5D"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Texte "Favorite Book" -->
+    <TextView
+        android:id="@+id/text_favorite_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Favorite Book"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/text_find_your"
+        app:layout_constraintTop_toBottomOf="@+id/text_find_your" />
+
+    <!-- Image à droite -->
+    <ImageView
+        android:id="@+id/image_top_right"
+        android:layout_width="151dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/imgbackg" />
+
+    <!-- Icône panier -->
+    <ImageView
+        android:id="@+id/cart_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/search_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_shopping_basket_24" />
+
+    <!-- Barre de recherche -->
+    <EditText
+        android:id="@+id/search_bar"
+        android:layout_width="265dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_bg"
+        android:drawableStart="@drawable/baseline_search_24"
+        android:hint="Search your book"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="#62878F"
+        app:layout_constraintEnd_toEndOf="@+id/image_top_right"
+        app:layout_constraintHorizontal_bias="0.661"
+        app:layout_constraintStart_toStartOf="@+id/text_favorite_book"
+        app:layout_constraintTop_toBottomOf="@+id/text_favorite_book" />
   </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <!-- RecyclerView -->
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:backgroundTint="@color/light_gray"
+      app:layout_constraintTop_toBottomOf="@+id/top_section"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintWidth_percent="0.9" />
+</androidx.constraintlayout.widget.ConstraintLayout>

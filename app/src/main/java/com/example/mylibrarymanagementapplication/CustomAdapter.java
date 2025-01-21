@@ -22,6 +22,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private Activity activity;
     private ArrayList<String> book_id, book_title, book_author, book_pages;
 
+    private String actionType; // Identifie si c'est pour "update" ou "reserve"
+
     // Constructor
     public CustomAdapter(Activity activity, Context context, ArrayList<String> book_id,
                          ArrayList<String> book_title, ArrayList<String> book_author, ArrayList<String> book_pages) {
