@@ -14,15 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-//making a translator between your data (books) and the RecyclerView (a scrollable list).
-//Purpose of CustomAdapter: It's a helper that takes your data (like a list of books) and makes sure it shows up correctly on the screen inside the RecyclerView.
+//But principal :
+//Adapter les données (livres) pour les afficher dans un RecyclerView.
+//Créer et remplir les lignes (chaque ligne représentant un livre) à partir des données fournies.
+//Gérer les interactions (par exemple, un clic sur une ligne pour ouvrir une autre activité).
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private Context context;
     private Activity activity;
     private ArrayList<String> book_id, book_title, book_author, book_pages;
 
-    private String actionType; // Identifie si c'est pour "update" ou "reserve"
+
 
     // Constructor
     public CustomAdapter(Activity activity, Context context, ArrayList<String> book_id,
@@ -102,9 +104,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView book_id_txt, book_title_txt, book_author_txt, book_pages_txt;
 
-        //mainLayout refers to the <LinearLayout> container that holds all the other views (TextViews for book_id, book_title, etc.).
-        // ==>LinearLayout balise fil row.xml feha les elments mta3 e rows ==>Row refers to the entire LinearLayout item (which will contain all the TextViews).
-        LinearLayout mainLayout;
+        //Contient les références aux widgets de chaque ligne (TextView pour l'ID, le titre, l'auteur, etc.).
+        //Permet d’associer facilement les données aux widgets sans avoir à les rechercher plusieurs fois.
+
+                LinearLayout mainLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             book_id_txt = itemView.findViewById(R.id.book_id_txt);

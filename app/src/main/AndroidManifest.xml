@@ -21,7 +21,8 @@
             android:exported="false" />
         <activity
             android:name=".ReserveActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".UserActivity" />
 
         <receiver
             android:name=".LibraryBroadcastReceiver"
@@ -35,7 +36,8 @@
 
         <activity
             android:name=".UserActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -55,7 +57,8 @@
         <activity
             android:name=".LibrarianActivity"
             android:exported="false"
-            android:label="Book Library" />
+            android:label="Book Library"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

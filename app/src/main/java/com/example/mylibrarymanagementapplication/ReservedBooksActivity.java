@@ -1,58 +1,52 @@
 package com.example.mylibrarymanagementapplication;
 
+import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ReservedBooksActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private ReservedBooksAdapter reservedBooksAdapter;
-    private ArrayList<String> book_id, book_title, book_author, book_pages, book_reserved_date;
+    RecyclerView recyclerView;
+    ArrayList<String> book_id, book_title, book_author, book_pages;
+    CustomAdapter customAdapter;
+    MyDatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reserved_books);  // Assurez-vous que ce fichier XML contient un RecyclerView avec ID recyclerView
+        setContentView(R.layout.activity_reserved_books);
 
-        // Initialiser RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Initialiser les listes
         book_id = new ArrayList<>();
         book_title = new ArrayList<>();
         book_author = new ArrayList<>();
         book_pages = new ArrayList<>();
-        book_reserved_date = new ArrayList<>();
+        myDB = new MyDatabaseHelper(this);
 
-        // Remplir les listes avec des données fictives
-        book_id.add("1");
-        book_title.add("Title of Book 1");
-        book_author.add("Author 1");
-        book_pages.add("250");
-        book_reserved_date.add("12/01/2025");
+        storeReservedBooksDataInArrays();  // Charge les données des livres réservés
 
-        book_id.add("2");
-        book_title.add("Title of Book 2");
-        book_author.add("Author 2");
-        book_pages.add("300");
-        book_reserved_date.add("15/01/2025");
+        customAdapter = new CustomAdapter(this, this, book_id, book_title, book_author, book_pages);
+        recyclerView.setAdapter(customAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-        // Créer un nouvel adaptateur et le lier au RecyclerView
-        reservedBooksAdapter = new ReservedBooksAdapter(
-                ReservedBooksActivity.this,
-                book_id,
-                book_title,
-                book_author,
-                book_pages,
-                book_reserved_date
-        );
-        recyclerView.setAdapter(reservedBooksAdapter);
+    private void storeReservedBooksDataInArrays() {
+        Cursor cursor = myDB.readReservedBooks();
+
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                book_id.add(cursor.getString(0));
+                book_title.add(cursor.getString(1));
+                book_author.add(cursor.getString(2));
+                book_pages.add(cursor.getString(3));
+            }
+        } else {
+            Toast.makeText(this, "No reserved books found", Toast.LENGTH_SHORT).show();
+        }
+
+        cursor.close();  // N'oubliez pas de fermer le curseur
     }
 }

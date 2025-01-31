@@ -85,7 +85,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("pages", pages);
 
         // Insérer la réservation dans une table spécifique (ex. "reserved_books")
-        long result = db.insert("reserved_books", null, contentValues);
+        long result = db.insert(TABLE_NAME, null, contentValues);
 
         if (result == -1) {
             // Si l'insertion échoue, afficher un message d'erreur
@@ -96,11 +96,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getReservedBooks() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        // Récupérer toutes les réservations
-        return db.rawQuery("SELECT * FROM reserved_books", null);
-    }
+
 
 
     Cursor readAllData(){
@@ -187,6 +183,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return latestTimestamp;
+    }
+
+
+    public Cursor readReservedBooks() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Requête SQL pour récupérer les livres réservés
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_STATUS + " = ?";
+
+        // Exécutez la requête avec "reserved" comme paramètre
+        return db.rawQuery(query, new String[]{"reserved"});
     }
 
 }
